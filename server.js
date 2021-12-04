@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const path = require("path");
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,7 +16,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
 db.Workout.create({ name: "New Workout" })
   .then(dbWorkout => {
@@ -36,25 +37,21 @@ db.Workout.create({ name: "New Workout" })
 //     });
 // });
 
-// app.get("/books", (req, res) => {
-//   db.Book.find({})
-//     .then(dbBook => {
-//       res.json(dbBook);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
+// app.get("/exercise", (req, res) => {
+//     res.send(exercise.html);
 // });
 
-// app.get("/library", (req, res) => {
-//   db.Library.find({})
-//     .then(dbLibrary => {
-//       res.json(dbLibrary);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
+// app.get("/", (req, res) => {
+//     res.send(index.html);
 // });
+
+app.get("/stats", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/stats.html"));
+});
+
+app.get("/exercise", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/exercise.html"));
+});
 
 // app.get("/populated", (req, res) => {
 //   db.Library.find({})

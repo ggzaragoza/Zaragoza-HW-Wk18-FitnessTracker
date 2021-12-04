@@ -16,34 +16,12 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
-
-// db.Workout.create({ name: "New Workout" })
-//   .then(dbWorkout => {
-//     console.log(dbWorkout);
-//   })
-//   .catch(({message}) => {
-//     console.log(message);
-//   });
-
-// app.post("/submit", ({body}, res) => {
-//   db.Book.create(body)
-//     .then(({_id}) => db.Library.findOneAndUpdate({}, { $push: { books: _id } }, { new: true }))
-//     .then(dbLibrary => {
-//       res.json(dbLibrary);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
-
-// app.get("/exercise", (req, res) => {
-//     res.send(exercise.html);
-// });
-
-// app.get("/", (req, res) => {
-//     res.send(index.html);
-// });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+ });
 
 app.get("/stats", (req, res) => {
     res.sendFile(path.join(__dirname, "./public/stats.html"));
@@ -63,6 +41,16 @@ app.get("/api/workouts", (req, res) => {
     });
 });
 
+app.get("/api/workouts/range", (req, res) => {
+    db.Workout.find({})
+        .then(workout => {
+            res.json(workout);
+    })
+        .catch(err => {
+            res.json(err);
+    });
+});
+
 app.post("/api/workouts", ({ body }, res) => {
     db.Workout.create(body)
         .then(workout => {
@@ -73,8 +61,8 @@ app.post("/api/workouts", ({ body }, res) => {
     });
 });
 
-app.put("/api/workouts", ({ body }, res) => {
-    db.Workout.create(body)
+app.put("/api/workouts/:id", (req, res) => {
+    db.Workout.findByIdAndUpdate(req.params.id, { $push: { exercises: req.body }}, { new: true })
         .then(workout => {
             res.json(workout);
     })
@@ -82,17 +70,6 @@ app.put("/api/workouts", ({ body }, res) => {
             res.json(err);
     });
 });
-
-// app.get("/populated", (req, res) => {
-//   db.Library.find({})
-//     .populate("books")
-//     .then(dbLibrary => {
-//       res.json(dbLibrary);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);

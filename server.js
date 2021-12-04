@@ -18,13 +18,13 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
-db.Workout.create({ name: "New Workout" })
-  .then(dbWorkout => {
-    console.log(dbWorkout);
-  })
-  .catch(({message}) => {
-    console.log(message);
-  });
+// db.Workout.create({ name: "New Workout" })
+//   .then(dbWorkout => {
+//     console.log(dbWorkout);
+//   })
+//   .catch(({message}) => {
+//     console.log(message);
+//   });
 
 // app.post("/submit", ({body}, res) => {
 //   db.Book.create(body)
@@ -52,6 +52,16 @@ app.get("/stats", (req, res) => {
 app.get("/exercise", (req, res) => {
     res.sendFile(path.join(__dirname, "./public/exercise.html"));
 });
+
+app.get("/api/workouts", (req, res) => {
+    db.Workout.find({})
+      .then(workout => {
+        res.json(workout);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
 
 // app.get("/populated", (req, res) => {
 //   db.Library.find({})

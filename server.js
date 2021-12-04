@@ -55,13 +55,33 @@ app.get("/exercise", (req, res) => {
 
 app.get("/api/workouts", (req, res) => {
     db.Workout.find({})
-      .then(workout => {
-        res.json(workout);
-      })
-      .catch(err => {
-        res.json(err);
-      });
-  });
+        .then(workout => {
+            res.json(workout);
+    })
+        .catch(err => {
+            res.json(err);
+    });
+});
+
+app.post("/api/workouts", ({ body }, res) => {
+    db.Workout.create(body)
+        .then(workout => {
+            res.json(workout);
+    })
+        .catch(err => {
+            res.json(err);
+    });
+});
+
+app.put("/api/workouts", ({ body }, res) => {
+    db.Workout.create(body)
+        .then(workout => {
+            res.json(workout);
+    })
+        .catch(err => {
+            res.json(err);
+    });
+});
 
 // app.get("/populated", (req, res) => {
 //   db.Library.find({})

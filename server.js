@@ -15,15 +15,15 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populate", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { useNewUrlParser: true });
 
-// db.Library.create({ name: "Campus Library" })
-//   .then(dbLibrary => {
-//     console.log(dbLibrary);
-//   })
-//   .catch(({message}) => {
-//     console.log(message);
-//   });
+db.Workout.create({ name: "New Workout" })
+  .then(dbWorkout => {
+    console.log(dbWorkout);
+  })
+  .catch(({message}) => {
+    console.log(message);
+  });
 
 // app.post("/submit", ({body}, res) => {
 //   db.Book.create(body)

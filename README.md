@@ -11,7 +11,6 @@ In this repository you will find files for a simple "fitness tracker" that recei
 
 <img width="800" src="./images/screenshot3.png">
 
-![MIT License](/badges/license-MIT-red.svg)
 ## Table of Contents
 - [Installation](#installation)
 - [Testing](#testing)

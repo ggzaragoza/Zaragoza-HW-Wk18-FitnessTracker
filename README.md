@@ -9,7 +9,7 @@ In this repository you will find files for a simple "fitness tracker" that recei
 
 <img width="800" src="./images/screenshot2.png">
 
-<img width="800" src="./images/screenshot3.png">
+<img width="800" src="./images/screenshot4.png">
 
 ## Table of Contents
 - [Installation](#installation)
